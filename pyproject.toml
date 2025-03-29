@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "image_aug_digestion"
+description = "A package for NTC-IC-Design Image-Augmented RAG"
+authors = [{ name = "YTCHEN30", email = "YTCHEN30@winbond.com" }]
+readme = "README.md"
+version = "0.8.5"
+requires-python = ">=3.9"
+dependencies = [
+    "python-dotenv==1.0.1",
+    "PyYAML==6.0.1",
+    "langchain-openai==0.1.17",
+    "azure-ai-documentintelligence",
+    "azure-identity==1.17.1",
+    "azure-search-documents==11.5.1",
+    "SQLAlchemy==2.0.32",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest"
+]
+
+[project.scripts]
+digest-cli = "doc2rag.cli.digest:app"
+ai-search-cli = "doc2rag.cli.ai_search:app"
+rag-cli = "doc2rag.cli.single_rag:app"
+sqldb-cli = "doc2rag.cli.sqldb_util:app"
+file-initialize-flow = "doc2rag.pipeline.file_flows:file_initialize_flow"
+file-processing-flow = "doc2rag.pipeline.file_flows:file_processing_flow"
+word-scan-flow = "doc2rag.pipeline.file_flows:word_scan_flow"
+ppt-scan-flow = "doc2rag.pipeline.file_flows:ppt_scan_flow"
+excel-scan-flow = "doc2rag.pipeline.file_flows:excel_scan_flow"
+di-flow = "doc2rag.pipeline.file_flows:di_flow"
+gen-figs-desc-flow = "doc2rag.pipeline.file_flows:gen_figs_desc_flow"
+bundle-flow = "doc2rag.pipeline.file_flows:bundle_flow"
+gen-chunks-flow = "doc2rag.pipeline.file_flows:gen_chunks_flow"
+delete-flow = "doc2rag.pipeline.file_flows:delete_flow"
+ais-upload-flow = "doc2rag.pipeline.ais_flows:upload_flow"
+ais-delete-flow = "doc2rag.pipeline.ais_flows:delete_flow"
+backup-flow = "doc2rag.pipeline.backup_flows:daily_backup_flow"
+confluence-basic-flow = "confluence2rag.pipeline.gen_md_flows:basic_flow"
