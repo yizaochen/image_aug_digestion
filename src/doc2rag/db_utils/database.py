@@ -33,7 +33,12 @@ class SQLiteAgent(BaseSQLAgent):
 
     def __init__(self) -> None:
         self._sql_db_path = PathConfig().sql_db_path
-        self._engine = create_engine(f"sqlite:///{self._sql_db_path}")
+        self._engine = create_engine(
+            f"sqlite:///{self._sql_db_path}",
+            pool_size=10,  # Max number of connections
+            max_overflow=5,  # Extra connections allowed temporarily
+            echo=False,  # Log SQL queries to console
+        )
         self._SessionLocal = sessionmaker(
             autocommit=False, autoflush=False, bind=self._engine
         )
@@ -57,7 +62,12 @@ class MSSQLAgent(BaseSQLAgent):
             "mssql+pyodbc",
             query={"odbc_connect": MSSQLConfig().connection_str},
         )
-        self._engine = create_engine(self._connection_str, echo=False)
+        self._engine = create_engine(
+            self._connection_str,
+            pool_size=10,  # Max number of connections
+            max_overflow=5,  # Extra connections allowed temporarily
+            echo=False,
+        )
         self._SessionLocal = sessionmaker(bind=self._engine)
         Base.metadata.create_all(bind=self._engine)
 
